@@ -1,21 +1,12 @@
-import os
-import re
 import pickle
-os.environ['TF_CPP_MIN_LOG_LEVEL']='2'
 import tensorflow as tf
 import numpy as np
 import random
 import matplotlib as mpl
 from mpl_toolkits.mplot3d import Axes3D
-import scipy.signal
 from tensorflow.contrib.layers import fully_connected
 from tensorflow.contrib.layers import dropout
 import matplotlib.pyplot as plt
-from datetime import datetime
-import sys
-
-now = datetime.utcnow().strftime("%Y%m%d")
-logdir = "/temp/run-{}/example".format(now)
 
 with open("input_array.pkl","rb") as f:
   input_array = pickle.load(f)
@@ -204,11 +195,12 @@ with tf.Session() as sess:
   
     print([generator_loss, discriminator_loss, fitting_loss])
     loss_matrix[epoch,:] = np.array([generator_loss, discriminator_loss])
-    
+    '''
     if (epoch + 1) % 1000 == 0:
       true_traj = part_output
       fake_traj = sess.run(fake_xyz, feed_dict = {real_input: part_input, real_output: part_output})
       save_path = saver.save(sess,"/tmp/ash_particle/seq2seq_short_GAN.ckpt")
+    '''
 
 np.savetxt('seq2seq_short_training_curve.txt', loss_matrix, delimiter = '\t')
 
