@@ -1,7 +1,4 @@
-import os
-import re
 import pickle
-os.environ['TF_CPP_MIN_LOG_LEVEL']='2'
 import tensorflow as tf
 import numpy as np
 import random
@@ -11,12 +8,6 @@ import scipy.signal
 from tensorflow.contrib.layers import fully_connected
 from tensorflow.contrib.layers import dropout
 import matplotlib.pyplot as plt
-from datetime import datetime
-import sys
-from scipy import interpolate
-
-now = datetime.utcnow().strftime("%Y%m%d")
-logdir = "/temp/run-{}/example".format(now)
 
 with open("full_dictionary.pkl","rb") as f:
   full_batches = pickle.load(f)
@@ -117,7 +108,7 @@ with tf.Session() as sess:
   init.run()
   full_xyz = xyz_norm(full_batches)
   
-  pre_saver.restore(sess,"/tmp/ash_particle/Newfolder/seq2seq_short_GAN.ckpt")
+  pre_saver.restore(sess,"seq2seq_short_GAN.ckpt")
   np.random.shuffle(full_xyz)
   
   init_xyz = full_xyz[:,:10]#-1, 10, 3
